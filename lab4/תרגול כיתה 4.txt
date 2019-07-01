@@ -1,0 +1,52 @@
+﻿תרגול כיתה 4
+תכנות מונחה עצמים
+
+
+בתרגול זה נראה דוגמאות פשוטות יחסית של הורשה. נתחיל ממחלקה פשוטה לתיאור חדר, שמטרתה היא חישוב עלות הריצוף של החדר.
+
+
+המחלקה Room
+public class Room {
+    private int length, width;
+    private int costPerMeter;
+
+
+    public Room(int length, int width, int costPerMeter) {
+        this.length = length;
+        this.width = width;
+        this.costPerMeter = costPerMeter;
+    }
+
+
+    public int area() {
+        return length * width;
+    }
+
+
+    public int cost() {
+        return area() * costPerMeter;
+    }
+}
+המחלקה Bathroom
+נרש מהמחלקה Room כדי לתאר חדר מקלחת, שם צריך לרצף גם את הקירות. לשם כך:
+1. נוסיף משתנה לתיאור גובה החדר.
+2. נזדקק לגישה ל-costPerMeter. איך ניתן לפתור זאת?
+3. נרצה את היקף החדר. גם פה יש הרבה דרכים לפתור.
+4. וכמובן, נצטרך לעשות override לשיטה cost.
+
+
+המחלקה ParentsRoom.
+מתארת חדר שיש לו בנוסף מקלחת. מחלקה זו גם יורשת מ-Room, אבל יש לה גם שדה שמחזיק משתנה מסוג Bathroom. גם פה יהיה צריך לעשות override לשיטה cost.
+* דרך אחרת היא לא לרשת מהמחלקה Room, אלא שיהיו לנו שני משתנים במחלקה, אחד מסוג Room ואחד מסוג Bathroom.
+
+
+
+
+תוספת
+הוספת toString למחלקות השונות. שימו לב, שלמחלקה Bathroom בעצם אין צורך להוסיף שיטה זאת. גם שימו לב, שיש בעיה עם ההדפסה שנקבל למחלקה ParentsRoom.
+
+
+
+
+קישור
+כאן מופיע תיקייה עם המחלקה Room המקורית איתה מתחילים את התרגול, ועם המחלקות איתן אנחנו מסיימים אותו.
