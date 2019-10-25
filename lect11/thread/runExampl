@@ -1,0 +1,22 @@
+package a;
+
+public class b implements Runnable{
+
+	@Override
+	public void run() {
+		System.out.println("run is running ..");
+		
+	}
+	
+	public static void main(String [] args) {
+		
+		Thread t1 =new Thread(new b());
+		System.out.println("before run 1");
+		t1.start();
+		Thread t2 =new Thread(new b());
+		System.out.println("before run 2");
+		t2.start();
+	}
+	
+
+}
