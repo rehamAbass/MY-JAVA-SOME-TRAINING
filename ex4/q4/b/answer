@@ -1,0 +1,89 @@
+package a;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class equiv <E>{
+
+	List <Set<E>> l = new ArrayList<>();
+	//////////////////////////////////////////////////
+	public equiv () {}
+	/////////////////////////////////////////////////
+	public void add(E e1, E e2) {
+		boolean flag =false;
+		int index1=-1, index2=-1;
+	if(l.size() == 0) {
+		Set <E> a = new HashSet<>();
+		a.add(e1);
+		a.add(e2);
+		l.add(a);
+	}
+	else {
+		for(int i=0; i<l.size();i++) {
+			
+				if(l.get(i).contains(e1)) {
+					l.get(i).add(e2);
+					flag= true;
+					index1=i; 
+					System.out.println("found e1 = "+e1.toString()+" 	add	 e2 = "+e2.toString());
+				}
+				else if(l.get(i).contains(e2)) {
+					l.get(i).add(e1);
+					flag =true;
+					index2=i;
+					System.out.println("found e2 = "+e2.toString()+" 	add	 e1 = "+e1.toString());
+				}
+			}
+		
+		if(index1!= -1 && index2 !=-1) {
+			l.get(index1).addAll(l.get(index2));
+			System.out.println(" remove set number "+index2+"\nset ="+l.get(index2).toString()+"is removed from list");
+			l.remove(index2);
+	
+		}
+		if(flag == false) {//index1 == -1 && index2 == -1
+			Set <E> a = new HashSet<>();
+			a.add(e1);
+			a.add(e2);
+			l.add(a);
+			
+		}
+	}
+	
+	}
+	////////////////////////////////////////////////////
+	public boolean are(E e1, E e2) {
+	
+	for(int i=0; i<l.size();i++)
+		if(l.get(i).contains(e1)&&l.get(i).contains(e2))
+			return true;
+	return false;
+	}
+	
+	//////////////////////////////////////////////////////
+	public static void main(String[] args) {
+		equiv<String> a = new equiv<>();
+		a.add("ball", "balloon");
+		a.add("child", "person");
+		a.add("girl", "child");
+		a.add("ball", "sphere");
+		a.add("sphere", "circle");
+		a.add("dog", "cat");	
+		a.add("dog", "circle");
+		printList(a.l);
+		System.out.println("balloon - circle:   "+ a.are("balloon", "circle"));
+		System.out.println("child - girl:       "+a.are("child", "girl"));	
+		System.out.println("dog - ball:         "+a.are("dog", "ball"));
+		System.out.println("table - dog:        "+a.are("table", "dog"));	
+	}
+	///////////////////////////////////////////
+	public static <E>void printList(List<Set<E>> l2) {
+		System.out.println("\nList is :");
+		for(int i=0; i<l2.size();i++)
+			System.out.println(l2.get(i).toString());
+	
+	}
+//////////////////////////////////////////////////////////
+}
