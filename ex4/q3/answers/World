@@ -1,0 +1,77 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+public class World {
+	private Map<String, Country>countries;
+	
+	//////////////////
+	public void addCountry(String name) {
+		if(countries == null) {
+			countries = new HashMap<>();
+		}
+		countries.put(name, new Country(name));
+	}
+	/////////////////////
+	public void addCity(String name,String countryName,int pop) {
+			if(countries.containsKey(countryName)) {
+				Country c=countries.get(countryName);
+				c.addCity(new City(name, c, pop));
+			}
+			else {
+			throw new IllegalArgumentException();
+			}
+	}
+	////////////////////////
+	public int population() {
+		int sum=0;
+		Set <String> set=countries.keySet();
+		for(String name:set) {
+			sum+=countries.get(name).population();
+		}
+		return sum;
+	}
+	/////////////////////////////
+	public List <City>smallCities(int under){
+		List<City> list= new ArrayList<>();
+		Set<String> set=countries.keySet();
+		for(String name:set) {
+			list.addAll(countries.get(name).smallCities(under));
+		}
+		return list;
+	}
+	////////////////////////////////
+	public String report() {
+		StringBuilder s=new StringBuilder();
+		Set<String>set =countries.keySet();
+		for(String name: set) {
+			s.append(countries.get(name).report());
+			s.append("\n");
+		}
+		s.append(String.format("Total population is %d",population()));
+		return s.toString();
+	}
+	/////////////////////////////////
+	
+public static void main(String [] args) {
+	World w = new World();
+	w.addCountry("Spain");
+	w.addCity("Granada", "Spain", 233764);
+	w.addCountry("Brazil");
+	w.addCity("Salvador",  "Brazil", 2677000);
+	w.addCity("Barcelona", "Spain", 1615000);
+	w.addCity("Rio de Janeiro",  "Brazil", 6320000);
+
+	System.out.println(w.report());
+	int bound = 2000000;
+	System.out.println("Cities with population under " + bound + ":");
+	System.out.println(w.smallCities(bound));
+
+	
+	
+}
+
+
+
+}
