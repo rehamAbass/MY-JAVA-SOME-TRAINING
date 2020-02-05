@@ -1,0 +1,71 @@
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Country implements Comparable<Country>{
+	private Set<City>cities;
+	private String name;
+	public Country(String name){
+		this.name= name;
+	}
+	///////////////////////////////
+	public void addCity(City c) {
+		if(cities == null) {
+			cities= new TreeSet<City>();
+		}
+		if(c.getCountry()!= this)
+			throw new IllegalArgumentException();
+		cities.add(c);
+	}
+	///////////////////////////////
+	public int population() {
+		int sum=0;
+		for(City c: cities) {
+			sum+=c.getPopulation();
+		}
+		return sum;
+	}
+	///////////////////////////////
+	public String toString() {
+		return this.name;
+	}
+	/////////////////////////////
+	public List<City>smallCities(int under){
+		List <City> l= new ArrayList<>(); 
+		for(City c: cities) {
+			if(c.getPopulation() < under)
+				l.add(c);
+		}
+		return l;
+	}
+	////////////////////////////////
+	public String report() {
+		int i=0;
+		StringBuilder s=new StringBuilder();
+		s.append(String.format("%s(%d) :",this.name,this.population() ));
+		for(City c:cities) {
+			i++;
+			s.append(String.format(" %s(%d)",c.getName(),c.getPopulation()));
+			if(cities.size() != i)
+				s.append(",");
+		}
+		return s.toString();
+	}
+	//////////////////////////////
+	public boolean equals(Object other) {
+		if(this == other) return true;
+		if(!(other instanceof Country)) return false;
+		Country c= (Country)other;
+		if(c.name.equals(this.name)) return true;
+		return false;
+	}
+	/////////////////////////////
+	public int compareTo(Country other) { 
+		if(this.equals(other)) return 0;
+		return this.name.compareTo(other.name);
+	}
+	//////////////////////////////////////
+}
+
